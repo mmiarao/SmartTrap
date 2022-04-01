@@ -1,0 +1,26 @@
+<div>
+
+  <h2>設定</h2>
+  <!-- <div *ngIf="action === EditState.Create || action === EditState.Detail; else editBlock" > -->
+  <div>
+    <div class="main-form">
+      <mat-form-field class="full-width">
+        <input matInput readonly [(ngModel)]="id" placeholder="ID">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="password" [(ngModel)]="oldPwd" placeholder="現在のパスワード">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="password" [(ngModel)]="newPwd" placeholder="新しいパスワード">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="password" [(ngModel)]="newPwdConfirm" placeholder="新しいパスワード(確認)">
+      </mat-form-field>
+    </div>
+    <div *ngIf="newPwd && oldPwd">
+      <button mat-button (click)="update()">パスワード更新</button>
+    </div>
+<!--    <button mat-button color="primary" (click)="goBack()">戻る</button>-->
+
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<h3>ログアウト</h3>
+<p>
+  コンソールからログアウトしました
+</p>
+<a routerLink='/'>
+  <button mat-button color="primary" >TOP</button>
+</a>
+

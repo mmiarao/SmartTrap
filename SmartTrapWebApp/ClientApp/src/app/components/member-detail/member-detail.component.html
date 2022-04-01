@@ -1,0 +1,57 @@
+<div *ngIf="member">
+
+    <h2>{{memberName}} {{actionName}}</h2>
+    <!-- <div *ngIf="action === EditState.Create || action === EditState.Detail; else editBlock" > -->
+    <div>
+        <div class="main-form">
+            <!--<mat-form-field *ngIf="action != EditState.Create" class="full-width">
+                <input matInput readonly [(ngModel)]="member.id" placeholder="ID" >
+                <mat-hint></mat-hint>
+            </mat-form-field>-->
+        
+            <mat-form-field class="full-width">
+                <input matInput [readonly]="action === EditState.Delete" [(ngModel)]="member.name" placeholder="名前" [formControl]="requiredFormControl">
+                <mat-hint></mat-hint>
+                <mat-error *ngIf="requiredFormControl.hasError('required')">
+                    名前は必須です
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput type="email" [readonly]="action === EditState.Delete" [(ngModel)]="member.email" placeholder="E-Mail" [formControl]="emailFormControl">
+                <mat-hint>xxx@xxx.xxx形式で入力してください</mat-hint>
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    正しいE-Mail形式で入力してください
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    E-Mailは必須です
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput [readonly]="action === EditState.Delete" [(ngModel)]="member.phone" placeholder="電話番号" >
+                <mat-hint>オプション</mat-hint>
+            </mat-form-field>
+            <div *ngIf="action === EditState.Detail">
+                LINE通知用　友達招待メールを送信
+                <a routerLink="../../line/{{member.id}}">
+                    <img width="60" alt="LINE" [src]="lineBtnSrc"
+                        (mouseover)="lineBtnSrc = '/assets/line/btn_hover.png'"
+                        (mouseout)="lineBtnSrc = '/assets/line/btn_base.png'"
+                        (mousedown)="lineBtnSrc = '/assets/line/btn_press.png'"
+                        >
+                </a>
+            </div>
+            <div *ngIf="action === EditState.Create" >
+                <button *ngIf="emailFormControl.valid && requiredFormControl.valid" mat-button (click)="register()">新規登録</button>
+            </div>
+            <div *ngIf="action === EditState.Detail" >
+                <button mat-button (click)="update()">更新</button>
+            </div>
+            <div *ngIf="action === EditState.Delete" >
+                    <button mat-button (click)="delete()">削除</button>
+                </div>
+            </div>
+
+    </div>
+    <button mat-button color="primary" (click)="goBack()">戻る</button>
+    
+</div>

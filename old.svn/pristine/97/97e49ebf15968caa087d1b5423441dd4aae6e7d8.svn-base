@@ -1,0 +1,49 @@
+/* HeroDetailComponent's private CSS styles */
+
+  button {
+    margin-top: 20px;
+    font-family: Arial;
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    min-width: 180px;
+    cursor: pointer;
+    cursor: hand;
+  }
+  button:hover {
+    background-color: #cfd8dc;
+  }
+  button:disabled {
+    background-color: #eee;
+    color: #ccc;
+    cursor: auto;
+  }
+
+  
+.main-form{
+    margin:auto;
+    min-width: 200px;
+    max-width: 500px;
+}
+
+.full-width{
+    width: 100%;
+}
+.user-list{
+  text-align: left;
+}
+.list-content{
+  margin:auto;
+}
+ul {
+  list-style: none;
+}
+li:before{
+  content: "\f054";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  }
+button{
+    min-width: 200px;
+}

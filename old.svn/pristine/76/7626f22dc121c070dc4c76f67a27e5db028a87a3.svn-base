@@ -1,0 +1,51 @@
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using SmartTrapWebApp.Models.Member;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SmartTrapWebApp.Models.Sensor
+{
+    public class SensorEntity : TableEntity, ISensor
+    {
+        [IgnoreProperty]
+        public string Id 
+        {
+            set
+            {
+                this.RowKey = value;
+            }
+            get
+            {
+                return this.RowKey;
+            }
+        }
+
+        public string Pac { set; get; }
+
+        public string Name { set; get; }
+
+        public bool Registered { set; get; }
+        public bool Trapped { set; get; }
+
+        public string Status { set; get; }
+
+        public List<MemberModel> Members { set; get; }
+
+        internal static SensorEntity Create(string partitionKey, ISensor sensor)
+        {
+            return new SensorEntity()
+            {
+                PartitionKey = partitionKey,
+                RowKey = sensor.Id,
+                Name = sensor.Name,
+                Pac = sensor.Pac,
+                Registered = sensor.Registered,
+                Trapped = sensor.Trapped,
+                Status = sensor.Status,
+                Members = sensor.Members,
+            };
+        }
+    }
+}

@@ -1,0 +1,97 @@
+import { Component, OnInit } from '@angular/core';
+import { Member } from 'src/app/models/member';
+import { Sensor } from 'src/app/models/sensor';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { EditState } from 'src/app/enums';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { SensorService } from 'src/app/services/sensor.service';
+import { Observable, forkJoin } from 'rxjs';
+import { MemberService } from '../../services/member.service';
+import { MemberSensorService } from 'src/app/services/member-sensor.service';
+
+@Component({
+  selector: 'app-member-sensor',
+  templateUrl: './member-sensor.component.html',
+  styleUrls: ['./member-sensor.component.css']
+})
+export class MemberSensorComponent implements OnInit {
+
+  constructor(
+    private route: ActivatedRoute,
+    private memberService: MemberService,
+    private sensorService:SensorService,
+    private location: Location,    
+    private memberSensorService:MemberSensorService) { }
+
+  EditState:typeof EditState = EditState;
+  action:EditState = EditState.Unknown;
+  actionName = "通報先設定";
+
+  sensor:Sensor;
+  members:Member[];
+  registedMembers:Member[];
+  toBeAdded:Member;
+  toBeRemoved:Member[];
+
+  ngOnInit() {
+    this.getSensorUsers();
+  }
+
+  getSensorUsers():void{
+    const id = this.route.snapshot.paramMap.get('id');
+    this.sensorService.getSensor(id).subscribe(x=>this.sensor = x);
+    this.memberSensorService.getMembers(id).subscribe(x=>{
+      this.registedMembers = x;
+      this.getMembers();
+    });
+  }
+
+  getMembers(): void{
+    this.members = [];
+    this.memberService.getMembers().subscribe(
+      (next) => {
+      var r = next.filter(u => {
+        if (this.registedMembers.findIndex(registed => registed.id === u.id) >= 0) {
+          return false;
+        }
+        return true;
+      });
+      this.members = this.members.concat(r);
+      },
+      (err) => {
+
+      },
+      () => {
+
+      }
+    );
+  }
+
+  add():void{
+    if(this.toBeAdded && this.sensor){
+      this.memberSensorService.addMemberSensor(this.toBeAdded, this.sensor).subscribe(x=>this.getSensorUsers());
+    }
+    this.toBeAdded = null;
+  }
+
+  remove():void{
+
+    const list:Observable<any>[] = [];
+
+    if(this.toBeRemoved){
+      this.toBeRemoved.forEach(x=>{
+        list.push(
+          this.memberSensorService.deleteMemberSensor(x.id, this.sensor.id)
+        );
+      });
+      forkJoin(list).subscribe(x=>
+        this.getSensorUsers()
+      );
+    }
+  }
+
+  goBack():void{
+    this.location.back();
+  }
+}

@@ -1,0 +1,32 @@
+import { Component, OnInit } from '@angular/core';
+import { Sensor } from '../../models/sensor';
+import { SENSORS } from '../../mock-data/mock-sensors';
+import { SensorService } from '../../services/sensor.service';
+import { Observable, of} from 'rxjs'
+import { MatCheckboxClickAction, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-sensors',
+  templateUrl: './sensors.component.html',
+  styleUrls: ['./sensors.component.css'],
+  providers:[
+    {provide:MAT_CHECKBOX_CLICK_ACTION, useValue:'noop'}
+  ]
+})
+
+export class SensorsComponent implements OnInit {
+
+  sensors:Sensor[];
+  constructor(private sensorService:SensorService) { }
+
+  ngOnInit() {
+    this.getSensors();
+  }
+
+  getSensors():void{
+    this.sensorService.getSensors().subscribe(sensors => this.sensors = sensors);
+  }
+
+
+}

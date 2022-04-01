@@ -1,0 +1,31 @@
+<div *ngIf="sensor">
+    <h2>{{sensor.name}} {{actionName}}</h2>
+    <div>
+        <p>通報先設定数：{{registedMembers.length}}</p>
+    </div>
+    <div>
+        <div class="main-form">
+            <div class="full-width">
+                <h3>会員選択</h3>
+                <mat-label>通報先に登録する会員を選択してください</mat-label>
+                <mat-select [(ngModel)]="toBeAdded" class="selectors select-list" color="primary">
+                    <mat-option *ngFor="let member of members" [value]="member">
+                        {{member.name}} {{member.email}}
+                    </mat-option>
+                </mat-select>
+                <button mat-button (click)="add()">通報設定</button>
+            </div>
+            <hr/>
+            <div *ngIf="registedMembers.length" class="full-width">
+                    <h3>通報先一覧</h3>
+                    <mat-selection-list [(ngModel)]="toBeRemoved" class="selectors member-list" >
+                        <mat-list-option *ngFor="let member of registedMembers"  [value]="member">
+                            {{member.name}} {{member.email}}
+                        </mat-list-option>
+                    </mat-selection-list>            
+                    <button mat-button (click)="remove()">通報解除</button>
+                </div>
+            </div>
+    </div>
+    <button mat-button color="primary" (click)="goBack()">戻る</button>
+</div>

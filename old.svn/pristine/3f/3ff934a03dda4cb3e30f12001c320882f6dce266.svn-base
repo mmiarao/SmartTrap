@@ -1,0 +1,10 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "ログアウト";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    <p>ログアウトしました</p>
+</header>

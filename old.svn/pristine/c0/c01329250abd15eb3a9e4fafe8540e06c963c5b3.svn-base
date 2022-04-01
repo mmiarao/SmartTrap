@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.WindowsAzure.Storage.Table;
+using SmartTrapWebApp.Data.Tables;
+using SmartTrapWebApp.Models;
+using SmartTrapWebApp.Models.Configurations;
+using SmartTrapWebApp.Models.Member;
+using SmartTrapWebApp.Models.Tables;
+
+namespace SmartTrapWebApp.Controllers
+{
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MemberController : Base.Controller 
+    {
+        public MemberController(
+            IOptions<Constants> constants,
+            IOptions<Secrets> secrets,
+            ILogger<MemberController> logger
+            )
+        {
+            Logger = logger;
+            Constants = constants.Value;
+            Secrets = secrets.Value;
+        }
+
+        internal override ILogger Logger { set; get; }
+        Constants Constants { get; }
+        Secrets Secrets { get; }
+
+        MemberTableClient client;
+        MemberTableClient Client
+        {
+            get
+            {
+                if(client == null)
+                {
+                    client = new MemberTableClient(Constants, Secrets);
+                }
+                return client;
+            }
+        }
+        // GET: api/Member
+        [HttpGet]
+        public async Task<MembersResponse> Get([FromQuery]int? count = 20, [FromQuery]string rowKey = null)
+        {
+            var iCount = count ?? 20;
+            var r = await Client.GetMembers(iCount, new Microsoft.WindowsAzure.Storage.Table.TableContinuationToken()
+            {
+                TargetLocation = Microsoft.WindowsAzure.Storage.StorageLocation.Primary,
+                NextTableName = Client.Table.Name,
+                NextPartitionKey = Constants.SystemNameEn,
+                NextRowKey = rowKey
+            });
+            List<MemberResponse> members = new List<MemberResponse>();
+            r.Results.ForEach(x =>
+            {
+                members.Add(MemberResponse.Create(x.RowKey, x));
+            });
+            return new MembersResponse()
+            {
+                Members = members,
+                NextKey = r?.ContinuationToken?.NextRowKey,
+            };
+        }
+
+        // GET: api/Member/5
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<MemberEntity> Get(string id)
+        {
+            return await Client.GetMember(id);
+        }
+
+        // POST: api/Member
+        [HttpPost]
+        public async Task<ActionResult<MemberResponse>> Post([FromBody] MemberInput value)
+        {
+            if (!ModelState.IsValid)
+            {
+                WarnLog($"パラメタ異常：{ModelState.ToString()}");
+                return BadRequest();
+            }
+            string id = Guid.NewGuid().ToString();
+            while(await Client.Any(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            var entity = MemberEntity.Create(Constants.SystemNameEn, id, value);
+            var r = await Client.InsertMember(entity);
+            if(r == null)
+            {
+                return null;
+            }
+            return MemberResponse.Create(id, value);
+        }
+
+        // PUT: api/Member/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<MemberResponse>> Put(string id, [FromBody] MemberInput value)
+        {
+            if (!ModelState.IsValid)
+            {
+                WarnLog($"パラメタ異常：{ModelState.ToString()}");
+                return BadRequest();
+            }
+            var entity = MemberEntity.Create(Constants.SystemNameEn, id, value);
+            var r = await Client.InsertOrReplaceMember(entity);
+            if (r == null)
+            {
+                return null;
+            }
+            return MemberResponse.Create(id, value);
+
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public async Task Delete(string id)
+        {
+            await Client.DeleteEntity(Constants.SystemNameEn, id);
+        }
+
+
+    }
+}

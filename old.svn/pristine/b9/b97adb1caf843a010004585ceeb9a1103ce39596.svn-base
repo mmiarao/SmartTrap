@@ -1,0 +1,72 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { Sensor } from '../../models/sensor';
+import { ActivatedRoute } from '@angular/router';
+import { SensorService } from 'src/app/services/sensor.service';
+import { Location } from '@angular/common';
+import { EditState } from 'src/app/enums';
+import { FormControl, Validators } from '@angular/forms';
+import { MatCheckboxClickAction, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material/checkbox';
+
+@Component({
+  selector: 'app-sensor-detail',
+  templateUrl: './sensor-detail.component.html',
+  styleUrls: ['./sensor-detail.component.css'],
+  providers:[
+    {provide:MAT_CHECKBOX_CLICK_ACTION, useValue:'noop'}
+  ]
+
+})
+export class SensorDetailComponent implements OnInit {
+
+  @Input() sensor: Sensor;
+  constructor(
+    private route: ActivatedRoute,
+    private sensorService: SensorService,
+    private location: Location    
+  ) { }
+
+  requiredFormControl:FormControl = new FormControl('', [
+    Validators.required,
+  ]);  
+  EditState:typeof EditState = EditState;
+  action:EditState = EditState.Unknown;
+  actionName = "";
+
+  ngOnInit() {
+    this.getSensor();
+    this.route.data.subscribe(x=>{
+      if(x['action'] != null){
+        this.action = (x['action']);
+        switch(this.action){
+          case EditState.Create:
+            this.actionName = "登録";
+            break;
+  
+          case EditState.Detail:
+            this.actionName = "詳細";
+            break;
+        }
+      }
+    });
+  }
+
+  getSensor():void{
+    const id = this.route.snapshot.paramMap.get('id');
+    this.sensorService.getSensor(id).subscribe(x=>this.sensor = x);
+  }
+
+  goBack():void{
+    this.location.back();
+  }
+
+  register():void{
+    this.sensor.registered = true;
+    this.sensor.status = "正常";
+    this.location.back();
+  }
+
+  update():void{
+    this.location.back();
+  }
+
+}

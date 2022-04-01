@@ -1,0 +1,47 @@
+<img width="400" alt="Logo" src="assets/icon.png">
+<div class="container">
+    <h3>コンソールログイン</h3>
+    <form ngForm (ngSubmit)="onSubmit()" >
+      <!-- <div class="form-group">
+        <label for="account">ID:</label>
+        <input type="text" class="form-control" id="account" required
+          [(ngModel)]="account"  [ngModelOptions]="{standalone: true}" placeholder="ID"
+          >
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">パスワード:</label>
+        <input type="password" class="form-control" id="pwd"
+          [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Password"
+          >
+      </div> -->
+
+      <table class="form-group">
+        <tr>
+          <th>ID:</th>
+          <td>
+              <input type="text" class="form-control" id="account" required
+              [(ngModel)]="account"  [ngModelOptions]="{standalone: true}" placeholder="ID"
+              >
+          </td>
+        </tr>
+        <tr>
+          <th>
+              パスワード：
+          </th>
+          <td>
+              <input type="password" class="form-control" id="pwd"
+              [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Password"
+              >
+          </td>
+        </tr>
+      </table>
+
+      <button type="submit" class="btn btn-success">ログイン</button>
+
+    </form>
+    <div class="forgot-pwd">
+        <a>パスワードを忘れました</a>
+    </div>
+    
+</div>

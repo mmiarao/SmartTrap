@@ -1,0 +1,12 @@
+<div *ngIf="member">
+
+        <h2>LINE招待メール送信</h2>
+        <h3>{{member.name}}</h3>
+
+        <p>LINE通知登録用の招待メールを送信します</p>
+      
+      
+        <button mat-button color="primary" (click)="send()">送信</button>
+        <button mat-button color="primary" (click)="goBack()">戻る</button>
+        
+    </div>

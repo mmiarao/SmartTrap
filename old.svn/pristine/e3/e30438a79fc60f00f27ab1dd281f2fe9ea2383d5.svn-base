@@ -1,0 +1,49 @@
+<div *ngIf="sensor">
+
+    <h2>{{sensorName}} {{actionName}}</h2>
+    <div>
+      <div class="main-form">
+        <mat-form-field class="full-width">
+          <input matInput [readonly]="action != EditState.Create" [(ngModel)]="sensor.id" placeholder="ID">
+          <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput [readonly]="action === EditState.Register || action === EditState.Delete" [(ngModel)]="sensor.name" placeholder="名称" [formControl]="requiredFormControl">
+          <mat-hint></mat-hint>
+          <mat-error *ngIf="requiredFormControl.hasError('required')">
+            名称は必須です
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput readonly [value]="sensor.registered?'登録済':'未登録'" placeholder="登録状況">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput readonly [value]="sensor.status" placeholder="状態">
+        </mat-form-field>
+        <div *ngIf="sensor.members" class="member-list">
+          <h3>通報先一覧</h3>
+          <ul class="list-content">
+            <li *ngFor="let member of sensor.members" class="list-content">{{member.name}} {{member.email}}</li>
+          </ul>
+        </div>
+
+        <a mat-button *ngIf="sensor.registered" routerLink='/sensors/member-sensor/{{sensor.id}}'>
+          <div mat-button color="info">通報先設定</div>
+        </a>
+        <div *ngIf="action === EditState.Create">
+          <button *ngIf="requiredFormControl.valid" mat-button (click)="create()">新規作成</button>
+        </div>
+        <div *ngIf="action === EditState.Register">
+          <button *ngIf="requiredFormControl.valid" mat-button (click)="register()">利用開始</button>
+        </div>
+        <div *ngIf="action === EditState.Detail">
+          <button mat-button (click)="update()">更新</button>
+        </div>
+        <div *ngIf="action === EditState.Delete">
+          <button mat-button (click)="delete()">削除</button>
+        </div>
+      </div>
+    </div>
+    <button mat-button color="primary" (click)="goBack()">戻る</button>  
+</div>

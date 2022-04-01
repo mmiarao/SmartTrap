@@ -1,0 +1,61 @@
+import { Sensor } from "../models/sensor"
+
+export const SENSORS: Sensor[] = [
+
+    { id : '1', pac : '', name : 'くくり罠1', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '2', pac : '', name : 'くくり罠2', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '3', pac : '', name : 'くくり罠3', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '4', pac : '', name : 'くくり罠4', registered : true, trapped : true, status : '正常', members : [] },
+    { id : '5', pac : '', name : 'くくり罠5', registered : true, trapped : false, status : '異常', members : [] },
+    { id : '6', pac : '', name : 'くくり罠6', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '7', pac : '', name : 'くくり罠7', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '8', pac : '', name : 'くくり罠8', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '9', pac : '', name : 'くくり罠9', registered : false, trapped : false, status : '', members : [] },
+    { id : '10', pac : '', name : 'くくり罠10', registered : false, trapped : false, status : '', members : [] },
+    { id : '11', pac : '', name : '檻罠1', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '12', pac : '', name : '檻罠2', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '13', pac : '', name : '檻罠3', registered : true, trapped : false, status : '異常', members : [] },
+    { id : '14', pac : '', name : '檻罠4', registered : true, trapped : false, status : '異常', members : [] },
+    { id : '15', pac : '', name : '檻罠5', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '16', pac : '', name : '檻罠6', registered : true, trapped : true, status : '正常', members : [] },
+    { id : '17', pac : '', name : '檻罠7', registered : true, trapped : false, status : '正常', members : [] },
+    { id : '18', pac : '', name : '檻罠8', registered : false, trapped : false, status : '正常', members : [] },
+    { id : '19', pac : '', name : '檻罠9', registered : false, trapped : false, status : '正常', members : [] },
+    { id : '20', pac : '', name : '檻罠10', registered : false, trapped : false, status : '正常', members : [] },
+    { id : '21', pac : '', name : '未定11', registered : false, trapped : false, status : '', members : [] },
+    { id : '22', pac : '', name : '未定1', registered : false, trapped : false, status : '', members : [] },
+    { id : '23', pac : '', name : '未定2', registered : false, trapped : false, status : '', members : [] },
+    { id : '24', pac : '', name : '未定3', registered : false, trapped : false, status : '', members : [] },
+    { id : '25', pac : '', name : '未定4', registered : false, trapped : false, status : '', members : [] },
+    { id : '26', pac : '', name : '未定5', registered : false, trapped : false, status : '', members : [] },
+    { id : '27', pac : '', name : '未定6', registered : false, trapped : false, status : '', members : [] },
+    { id : '28', pac : '', name : '未定7', registered : false, trapped : false, status : '', members : [] },
+    { id : '29', pac : '', name : '未定8', registered : false, trapped : false, status : '', members : [] },
+    { id : '30', pac : '', name : '未定9', registered : false, trapped : false, status : '', members : [] },
+    { id : '31', pac : '', name : '未定10', registered : false, trapped : false, status : '', members : [] },
+    { id : '32', pac : '', name : '未定11', registered : false, trapped : false, status : '', members : [] },
+    { id : '33', pac : '', name : '未定12', registered : false, trapped : false, status : '', members : [] },
+    { id : '34', pac : '', name : '未定13', registered : false, trapped : false, status : '', members : [] },
+    { id : '35', pac : '', name : '未定14', registered : false, trapped : false, status : '', members : [] },
+    { id : '36', pac : '', name : '未定15', registered : false, trapped : false, status : '', members : [] },
+    { id : '37', pac : '', name : '未定16', registered : false, trapped : false, status : '', members : [] },
+    { id : '38', pac : '', name : '未定17', registered : false, trapped : false, status : '', members : [] },
+    { id : '39', pac : '', name : '未定18', registered : false, trapped : false, status : '', members : [] },
+    { id : '40', pac : '', name : '未定19', registered : false, trapped : false, status : '', members : [] },
+    { id : '41', pac : '', name : '未定20', registered : false, trapped : false, status : '', members : [] },
+    { id : '42', pac : '', name : '未定21', registered : false, trapped : false, status : '', members : [] },
+    { id : '43', pac : '', name : '未定22', registered : false, trapped : false, status : '', members : [] },
+    { id : '44', pac : '', name : '未定23', registered : false, trapped : false, status : '', members : [] },
+    { id : '45', pac : '', name : '未定24', registered : false, trapped : false, status : '', members : [] },
+    { id : '46', pac : '', name : '未定25', registered : false, trapped : false, status : '', members : [] },
+    { id : '47', pac : '', name : '未定26', registered : false, trapped : false, status : '', members : [] },
+    { id : '48', pac : '', name : '未定27', registered : false, trapped : false, status : '', members : [] },
+    { id : '49', pac : '', name : '未定28', registered : false, trapped : false, status : '', members : [] },
+    { id : '50', pac : '', name : '未定29', registered : false, trapped : false, status : '', members : [] },
+    
+
+    
+    
+    
+]
+

@@ -1,0 +1,6 @@
+﻿.banner-top{
+    display:inline;
+}
+.logo-badge {
+    max-width: 120px;
+}

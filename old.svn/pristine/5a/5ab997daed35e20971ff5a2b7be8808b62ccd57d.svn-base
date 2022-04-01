@@ -1,0 +1,48 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=./smarttrap.db;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "IdentityServer": {
+    "Clients": {
+      "SmartTrapWebApp": {
+        "Profile": "IdentityServerSPA"
+      }
+    },
+    //"Key": {
+    //  "Type": "File",
+    //  "FilePath": "./server.pfx",
+    //  "Password": "a4c5kd27NM"
+    //}
+    "Key": {
+      "Type": "Development"
+    }
+
+  },
+  "ApiKeys": {
+    "LineLogin": {
+      "Id": "1653470282",
+      "Key": "0a1ae3cb0dc7eb37572458167675cf2a"
+    },
+    "LineMessaging": {
+      "Id": "1468057318",
+      "Key": "576f83cddbde99dcffeabafa68ac04ba"
+    }
+  },
+  "Secrets": {
+    "SoracomBeam": "Yhy4ySufx_zagu2y",
+    "AzureStorage": "1cCzePP9hMk0+XJXo51ecaEdgR4OzR8tZqbK6KuWKY13mR1DiL6RpkxNoXIqmxZgY3QjkpSuIfsE6mSZV4rorA=="
+  },
+
+  "Constants": {
+    "SystemNameJp": "鳥獣害罠検知システム",
+    "SystemNameEn": "SmartTrapSystem",
+    "SystemAuthor": "arao@metamedia.co.jp",
+    "AzureStorageName": "smarttrap"
+  },
+  "AllowedHosts": "*"
+}

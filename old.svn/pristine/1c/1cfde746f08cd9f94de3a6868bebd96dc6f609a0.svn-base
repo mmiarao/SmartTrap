@@ -1,0 +1,39 @@
+<h2>会員一覧</h2>
+<!-- <ul class="sensors">
+  <li *ngFor="let sensor of sensors" >
+    <a routerLink='/detail/{{sensor.id}}'>
+      <span class="badge">{{sensor.id}}</span>{{sensor.name}}
+    </a>
+  </li>
+</ul> -->
+<a routerLink='create'>
+    <div mat-button color="warn">新規登録</div>
+</a>
+<table align="center">
+  <tr>
+    <th>名前</th>
+    <th>E-Mail</th>
+    <th>電話番号</th>
+    <th>E-Mail通報</th>
+    <th>LINE通報</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let member of members">
+    <td>{{member.name}}</td>
+    <td>{{member.email}}</td>
+    <td>{{member.phone}}</td>
+    <td>{{member.useEmail?"通報":"－"}}</td>
+    <td>{{member.useLine?"通報":"－"}}</td>
+    <td>
+      <a routerLink='detail/{{member.id}}'>
+        <button mat-button color="warn">編集</button>
+      </a>
+      <a routerLink='delete/{{member.id}}'>
+        <button mat-button color="err">削除</button>
+      </a>
+    </td>
+  </tr>
+</table>
+<div *ngIf="nextKey">
+  <button mat-button onclick="getMembers()">さらに読み込む</button>
+</div>

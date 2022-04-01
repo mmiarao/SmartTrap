@@ -1,0 +1,12 @@
+import { TestBed } from '@angular/core/testing';
+import { MemberSensorService } from './member-sensor.service';
+
+
+describe('UserSensorService', () => {
+  beforeEach(() => TestBed.configureTestingModule({}));
+
+  it('should be created', () => {
+    const service: MemberSensorService = TestBed.get(MemberSensorService);
+    expect(service).toBeTruthy();
+  });
+});

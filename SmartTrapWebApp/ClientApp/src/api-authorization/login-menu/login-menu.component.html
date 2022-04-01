@@ -1,0 +1,71 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <div>
+    <div>
+      <div class="logo-img">
+        <a routerLink="/dashboard">
+          <img width="120" alt="Logo" src="assets/icon.png">
+        </a>
+      </div>
+      <div class="title">
+        <h1>
+          {{ title }}
+        </h1>
+        <h4>(ワーキングサンプル)</h4>
+      </div>
+      <div class="login-control">
+        <div *ngIf="(isAuthenticated | async)">
+          <a [routerLink]='["/authentication/logout"]' [state]='{ local: true }'>ログアウト</a>
+        </div>
+        <div *ngIf="!(isAuthenticated | async)">
+          <a [routerLink]='["/authentication/login"]' [state]='{ local: true }'>ログイン</a>
+        </div>
+      </div>
+    </div>
+    <!-- <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="> -->
+    <nav>
+      <!--<div *ngIf="!(isAuthenticated)">
+      <h3>しばらくお待ち下さい</h3>
+    </div>-->
+      <ul *ngIf="isAuthenticated | async">
+        <li routerLinkActive="current">
+          <a routerLink="/dashboard">ダッシュボード</a>
+        </li>
+        <li routerLinkActive="current">
+          <a routerLink="/sensors">センサー管理</a>
+        </li>
+        <li routerLinkActive="current">
+          <a routerLink="/members">会員管理</a>
+        </li>
+        <li routerLinkActive="current">
+          <a routerLink="/account">設定</a>
+        </li>
+        <!--<li routerLinkActive="current">
+          <a [routerLink]='["/authentication/profile"]'>設定</a>
+        </li>-->
+        <li routerLinkActive="current">
+          <a [routerLink]='["/authentication/logout"]' [state]='{ local: true }'>ログアウト</a>
+        </li>
+      </ul>
+    </nav>
+    <router-outlet></router-outlet>
+  </div>
+  <!-- <app-messages></app-messages> -->
+</div>
+
+<!--<ul class="navbar-nav" *ngIf="isAuthenticated | async">
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName | async }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
+  </li>
+</ul>
+<ul class="navbar-nav" *ngIf="!(isAuthenticated | async)">
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
+  </li>
+</ul>-->

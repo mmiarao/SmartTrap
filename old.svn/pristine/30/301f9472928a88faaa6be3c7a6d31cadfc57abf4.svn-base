@@ -1,0 +1,6 @@
+export enum EditState{
+    Create = "新規作成",
+    Detail = "詳細",
+    Delete = "削除",
+    Unknown = "",
+}

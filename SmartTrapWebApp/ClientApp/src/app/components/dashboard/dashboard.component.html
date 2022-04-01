@@ -1,0 +1,83 @@
+<div>
+    <mat-card class="info-card">
+        <mat-card-header>
+          <!-- <div mat-card-avatar class="info-header-image"></div> -->
+          <mat-card-title>登録情報</mat-card-title>
+          <mat-card-subtitle>センサー／会員登録状況等</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p><b>正常稼動中センサー数：{{availableSensorCount}}</b></p>
+            <p>センサー合計：{{sensorCount}}</p>
+            <p>登録済センサー数：{{regSensors.length}}</p>
+            <p>未登録センサー数：{{unregSensors.length}}</p>
+            <hr/>
+            <p>会員登録数：{{memberCount}}</p>
+            </mat-card-content>
+        <mat-card-actions>
+        </mat-card-actions>
+      </mat-card>
+</div>
+
+<div class="container-fluid">
+
+    <div *ngIf='errorSensors.length'>
+        <hr/>
+        <h3>罠作動中センサー</h3>
+        <mat-grid-list cols="4" rowHeight="100px">
+          <mat-grid-tile
+              *ngFor="let sensor of trappedSensors">
+            <a class="module-trapped sensor" routerLink="/sensors/detail/{{sensor.id}}"
+              mat-button matBadge="{{sensor.members ? sensor.members.length : '?'}}" matBadgePosition="after" matBadgeColor="accent"      
+              >
+              <div>
+                <h4>{{sensor.name}}</h4>
+              </div>
+            </a>
+          </mat-grid-tile>
+        </mat-grid-list>  
+    </div>
+    <div *ngIf='errorSensors.length'>
+      <hr/>
+      <h3>異常発生中センサー</h3>
+      <mat-grid-list cols="4" rowHeight="100px">
+        <mat-grid-tile
+            *ngFor="let sensor of errorSensors">
+          <a class="module-err sensor" routerLink="/sensors/detail/{{sensor.id}}"
+            mat-button matBadge="{{sensor.members ? sensor.members.length : '?'}}" matBadgePosition="after" matBadgeColor="accent"      
+            >
+            <div>
+              <h4>{{sensor.name}}</h4>
+            </div>
+          </a>
+        </mat-grid-tile>
+      </mat-grid-list>  
+    </div>
+    <div *ngIf='regSensors.length'>
+      <h3>全稼働中センサー</h3>
+      <mat-grid-list cols="4" rowHeight="100px">
+        <mat-grid-tile
+            *ngFor="let sensor of regSensors">
+          <a class="module sensor" routerLink="/sensors/detail/{{sensor.id}}"
+            mat-button matBadge="{{sensor.members ? sensor.members.length : '?'}}" matBadgePosition="after" matBadgeColor="accent"
+            >
+            <div>
+              <h4>{{sensor.name}}</h4>
+            </div>
+          </a>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    
+</div>
+
+
+<!-- <div>
+  <div class="grid grid-pad">
+    <a *ngFor="let sensor of errorSensors" class="col-1-4"
+      routerLink="/detail/{{sensor.id}}">
+      <div class="module sensor">
+        <h4>{{sensor.name}}</h4>
+      </div>
+    </a>
+  </div>
+</div> -->

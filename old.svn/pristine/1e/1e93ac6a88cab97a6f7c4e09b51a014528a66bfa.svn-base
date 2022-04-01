@@ -1,0 +1,123 @@
+import { Injectable } from '@angular/core';
+import { SensorService } from './sensor.service';
+import { Observable, of } from 'rxjs';
+import { MessageService } from './message.service';
+import { Member } from '../models/member';
+import { Sensor } from '../models/sensor';
+import { SENSORS } from '../mock-data/mock-sensors';
+import { MEMBERS } from '../mock-data/mock-uiser';
+import { MemberSensor } from '../models/member-sensor';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MemberSensorService {
+
+  constructor(
+    private messageService:MessageService,
+    ) { }
+
+  private memberSensors:MemberSensor[] = null;
+
+  private random(min:number, max:number):number{
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
+
+  getMemberSensors():Observable<MemberSensor[]>
+  {
+    if(this.memberSensors == null){
+      return new Observable<MemberSensor[]>((o)=>{
+        this.memberSensors = [];
+        SENSORS.forEach(s => {
+          if(s.registered){
+            var c = this.random(0, 4);
+            while(c > 0){
+              var i = this.random(0, MEMBERS.length);
+              c--;
+              this.memberSensors.push(
+              {
+                sensor : s,
+                member : MEMBERS[i]
+              });
+            }
+          }
+        });
+        o.next(this.memberSensors);
+        o.complete();
+      });
+    }
+    else{
+      return of(this.memberSensors);
+    }
+  }
+
+  addMemberSensor(member:Member, sensor:Sensor):Observable<MemberSensor[]>{
+    return new Observable<MemberSensor[]>((o)=>{
+      this.getMemberSensors().subscribe(x=>{
+        x.push(
+          {
+            member:member,
+            sensor:sensor,
+          });
+        o.next(x);
+        o.complete();
+      });
+    });
+  }
+
+  deleteMemberSensor(memberId:string, sensorId:string):Observable<MemberSensor[]>{
+    return new Observable<MemberSensor[]>((o)=>{
+      let r:MemberSensor[] = [];
+      this.getMemberSensors().subscribe(x=>{
+        x.splice(x.findIndex(us=>us.member.id === memberId && us.sensor.id === sensorId), 1);
+        o.next(x);
+        o.complete();
+      });
+    });
+  }
+
+  getMembers(sensorId:string):Observable<Member[]>{
+    return new Observable<Member[]>((o)=>{
+      let r:Member[] = [];
+      this.getMemberSensors().subscribe(x=>{
+        x.filter(x=>x.sensor.id === sensorId).forEach(x=>r.push(x.member));
+        o.next(r);
+        o.complete();
+      });
+    });
+  }
+
+  getSensors(memberId:string):Observable<Sensor[]>{
+    return new Observable<Sensor[]>((o)=>{
+      let r:Sensor[] = [];
+      this.getMemberSensors().subscribe(x=>{
+        x.filter(x=>x.member.id === memberId).forEach(x=>r.push(x.sensor));
+        o.next(r);
+        o.complete();
+      });
+    });
+  }
+
+  removeAllMemberBySensor(sensorId:string):Observable<MemberSensor[]>{
+    return new Observable<MemberSensor[]>((o)=>{
+      this.getMemberSensors().subscribe(x=>{
+        x.filter(x=>x.sensor.id != sensorId);
+        o.next(x);
+        o.complete();
+      });
+    });
+  }
+  removeAllSensorByMember(memberId:string):Observable<MemberSensor[]>{
+    return new Observable<MemberSensor[]>((o)=>{
+      this.getMemberSensors().subscribe(x=>{
+        x.filter(x=>x.member.id != memberId);
+        o.next(x);
+        o.complete();
+      });
+    });
+  }
+
+
+}

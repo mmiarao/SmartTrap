@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>鳥獣害罠検知システムWebコンソール</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+  <link rel="stylesheet" href="styles.d9ea2ae985b0662e0598.css"></head>
+  <body>
+    <app-root>
+      <div class="loading-panel">
+        <img class="logo-img" src="/assets/icon.png" />
+        <h3>読み込み中．．．</h3>
+      </div>
+    </app-root>
+  <script src="runtime-es2015.858f8dd898b75fe86926.js" type="module"></script><script src="polyfills-es2015.27661dfa98f6332c27dc.js" type="module"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule></script><script src="polyfills-es5.1fc3c7177b3068d2373b.js" nomodule></script><script src="main-es2015.3b50ad679c633b16ed96.js" type="module"></script><script src="main-es5.6722de9bbaf7d3e35742.js" nomodule></script></body>
+</html>

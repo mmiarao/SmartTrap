@@ -1,0 +1,48 @@
+<h2>センサー一覧</h2>
+<!-- <ul class="sensors">
+  <li *ngFor="let sensor of sensors" >
+    <a routerLink='/detail/{{sensor.id}}'>
+      <span class="badge">{{sensor.id}}</span>{{sensor.name}}
+    </a>
+  </li>
+</ul> -->
+<table align="center">
+  <tr>
+    <th>センサーID</th>
+    <th>センサー名称</th>
+    <th>登録状態</th>
+    <th>ステータス</th>
+    <th>通報先設定数</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let sensor of sensors"
+    [style.background-color]="sensor.trapped ? '#3dfa0d':''"
+    >
+    <td>{{sensor.id}}</td>
+    <td>{{sensor.name}}</td>
+    <td>
+      <mat-checkbox [ngModel]="sensor.registered" >{{sensor.registered ? '登録済み' : '未登録'}}</mat-checkbox>
+    </td>
+    <td>{{sensor.status}}</td>
+    <td>{{sensor.members.length}}</td>
+    <td>
+    </td>
+    <td>
+      <a routerLink='detail/{{sensor.id}}'>
+        <button mat-button color="info">編集</button>
+      </a>
+  
+      <a *ngIf="!sensor.registered" routerLink='register/{{sensor.id}}'>
+        <button mat-button color="warn">登録</button>
+      </a>
+      <a *ngIf="sensor.registered" routerLink='member-sensor/{{sensor.id}}'>
+        <button mat-button color="info">通報先設定</button>
+      </a>
+    </td>
+    <td>
+      <h4 *ngIf="sensor.trapped" class="warn">罠作動中</h4>
+    </td>
+  </tr>
+</table>

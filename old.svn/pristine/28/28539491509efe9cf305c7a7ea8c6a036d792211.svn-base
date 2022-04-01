@@ -1,0 +1,25 @@
+﻿@page
+@model Disable2faModel
+@{
+    ViewData["Title"] = "2要素認証無効設定";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>2要素認証を無効にします</strong>
+    </p>
+    <p>
+        2要素認証を無効にしてもアプリケーションの認証鍵は変動しません
+        認証鍵を変更する場合は<a asp-page="./ResetAuthenticator">こちら</a>から認証鍵をリセットしてください
+    </p>
+</div>
+
+<div>
+    <form method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">2要素認証無効化</button>
+    </form>
+</div>

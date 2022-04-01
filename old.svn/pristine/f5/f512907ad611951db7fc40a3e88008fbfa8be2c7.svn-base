@@ -1,0 +1,11 @@
+import { Member } from "./member";
+
+export class Sensor {
+    id:string;
+    pac:string;
+    name:string;
+    registered:boolean;
+    trapped:boolean;
+    status:string;
+    members:Member[];
+}

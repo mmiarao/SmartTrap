@@ -1,0 +1,136 @@
+import { Injectable, Inject } from '@angular/core';
+import { Member, MembersResponse } from '../models/member';
+import { MessageService } from './message.service';
+import { Observable, of} from 'rxjs';
+import { MEMBERS } from '../mock-data/mock-uiser';
+import { HttpClient } from '@angular/common/http';
+import { ErrorHandlerService } from './error-handler.service';
+import { catchError } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MemberService {
+
+  private members: Member[] = [];
+  private nextKey: string = null;
+
+  constructor(
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string,
+    private errorHandler: ErrorHandlerService,
+    private messageService : MessageService
+    ) { }
+
+  getMemberCount(): Observable<number> {
+    return of(0);
+  }
+  getAllMembers(): Observable<Member[]> {
+      return new Observable<Member[]>(o => {
+          var key: string = null;
+          function doWork(){
+              this.getMembers(key, 100).subscribe(x => {
+                  o.next(x.members);
+                  key = x.nextKey;
+                  if (key) {
+                      doWork();
+                  }
+                  else {
+                      o.complete();
+                  }
+              });
+          };
+          doWork();
+      });
+  }
+  getMembers(key: string = null, count: number = 20): Observable<MembersResponse>{
+
+    //メモリに存在すれば返す
+    if (key == null && this.members.length) {
+      var r: MembersResponse = new MembersResponse();
+      r.members = this.members;
+      r.nextKey = this.nextKey;
+      return of(r);
+    }
+
+    //keyが有効もしくはメンバーが存在しなければサーバから取得
+    var url = this.baseUrl + "api/Member?count=" + count;
+    if(key){
+      url += "&key=" + key;
+    }
+    
+    var o = this.http.get<MembersResponse>(url).pipe(
+      catchError(this.errorHandler.onError)
+    );
+    o.subscribe(x => {
+      this.members = this.members.concat(x.members);
+    });
+    return o;
+  }
+
+  getMember(id:string):Observable<Member>{
+    this.messageService.add("ユーザーID ${id} 取得");
+
+    //メモリ内に該当ユーザーがあれば返す
+    var r: Member | null = this.members.find(x => x.id === id);
+    if (r) return of(r);
+
+    var url = this.baseUrl + "api/Member/" + id;
+    return this.http.get<Member>(url).pipe(
+            catchError(this.errorHandler.onError)
+        ); 
+    //return new Observable<Member>(o=>{
+    //  this.getMembers().subscribe(x=>{
+    //    o.next(this.members.find(x => x.id === id));
+    //    o.complete();
+    //  });
+    //});
+  }
+
+  addMember(member:Member):Observable<Member>
+  {
+    this.messageService.add("ユーザー新規登録");
+    var url = this.baseUrl + "api/Member";
+    var r = this.http.post<Member>(url, member).pipe(
+            catchError(this.errorHandler.onError)
+    );
+    r.subscribe(x => {
+      this.members.push(x);
+    });
+    return r;
+    
+  }
+
+  updateMember(id: string, member: Member): Observable<Member>
+  {
+    this.messageService.add("ユーザー情報更新");
+    var url = this.baseUrl + "api/Member/" + id;
+    var r = this.http.put<Member>(url, member).pipe(
+      catchError(this.errorHandler.onError)
+    );
+    r.subscribe(x => {
+      var idx = this.members.findIndex(x => x.id === id);
+      if (idx >= 0) {
+        this.members[idx] = x;
+      }
+    });
+    return r;
+
+  }
+
+  deleteMember(id:string):Observable<any>{
+    this.messageService.add("ユーザー削除");
+    var url = this.baseUrl + "api/Member/" + id;
+    var r = this.http.delete(url).pipe(
+            catchError(this.errorHandler.onError)
+    );
+    r.subscribe(x => {
+      this.members.splice(this.members.findIndex(x => x.id === id));
+    });
+    return r;
+
+    //this.getMembers().subscribe(x=>{
+    //  this.members.splice(MEMBERS.findIndex(x=>x.id === id), 1);
+    //});
+  }
+}

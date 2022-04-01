@@ -1,0 +1,5 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SmartTrapWebApp.Areas.Identity
+@using SmartTrapWebApp.Areas.Identity.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using SmartTrapWebApp.Models

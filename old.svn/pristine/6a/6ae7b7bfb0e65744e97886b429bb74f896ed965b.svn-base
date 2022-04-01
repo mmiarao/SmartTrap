@@ -1,0 +1,46 @@
+﻿using AzureStorageLibPortal;
+using Microsoft.WindowsAzure.Storage.Table;
+using SmartTrapWebApp.Models;
+using SmartTrapWebApp.Models.Configurations;
+using SmartTrapWebApp.Models.Member;
+using SmartTrapWebApp.Models.Tables;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SmartTrapWebApp.Data.Tables
+{
+    public class MemberTableClient : Base.TableClientBase
+    {
+        public MemberTableClient(Constants constants, Secrets secrets) : base("Member", constants, secrets)
+        {
+        }
+        public async Task<TableQuerySegment<MemberEntity>> GetMembers(int count, TableContinuationToken token = null)
+        {
+            return await this.GetEntities<MemberEntity>(Constants.SystemNameEn, count, token);
+        }
+
+        public async Task<MemberEntity> GetMember(string rowKey)
+        {
+            return await this.GetEntity<MemberEntity>(Constants.SystemNameEn, rowKey);
+        }
+
+        public async Task<bool> Any(string rowKey)
+        {
+            return await GetMember(rowKey) != null ? true : false;
+        }
+
+        public async Task<MemberEntity> InsertMember(MemberEntity member)
+        {
+            var r = await this.InsertEntity(member);
+            return r.Result as MemberEntity;
+        }
+
+        public async Task<MemberEntity> InsertOrReplaceMember(MemberEntity member)
+        {
+            var r = await this.InsertOrReplaceEntity(member);
+            return r.Result as MemberEntity;
+        }
+    }
+}

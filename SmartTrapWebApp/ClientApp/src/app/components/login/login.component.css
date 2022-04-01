@@ -1,0 +1,17 @@
+.btn{
+    min-width: 280px;
+    width: 60%;
+    min-height: 60px;
+    max-height: 120px;
+}
+.forgot-pwd{
+    text-align: right;
+    margin-right: 10%;
+}
+.form-group{
+    margin:auto;
+    width: 60%;
+}
+.form-control{
+    min-width: 200px;
+}

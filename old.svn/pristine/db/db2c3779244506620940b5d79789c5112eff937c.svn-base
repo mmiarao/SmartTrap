@@ -1,0 +1,31 @@
+import { Component, OnInit } from '@angular/core';
+import { Member } from 'src/app/models/member';
+import { MemberService } from '../../services/member.service';
+import { MessageService } from '../../services/message.service';
+
+@Component({
+  selector: 'app-members',
+  templateUrl: './members.component.html',
+  styleUrls: ['./members.component.css']
+})
+export class MembersComponent implements OnInit {
+
+  members:Member[] = [];
+    constructor(
+        private messageService: MessageService,
+        private memberService: MemberService
+    ) {
+        this.loadCount = 20;
+    }
+
+  ngOnInit() {
+    this.getMembers();
+  }
+  skip: number;
+  loadCount: number;
+  getMembers(): void{
+    this.memberService.getMembers().subscribe(x => {
+      this.members = x;
+    });
+  }
+}

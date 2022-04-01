@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { SENSORS } from '../mock-data/mock-sensors';
+import { Sensor } from '../models/sensor';
+import {Observable, of }from 'rxjs'
+import { MessageService } from './message.service';
+import { MemberSensorService } from './member-sensor.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SensorService {
+
+  constructor(
+    private messageService : MessageService,
+    private memberSensorService:MemberSensorService
+    ) { }
+
+    private sensors:Sensor[]  = null;
+
+  getSensors():Observable<Sensor[]>{
+    this.messageService.add("センサーリスト取得");
+    this.sensors = SENSORS;
+    return new Observable<Sensor[]>((o)=>{
+      this.sensors.forEach(s => {
+        this.memberSensorService.getMembers(s.id).subscribe(x=>{
+          s.members = x;
+          o.next(this.sensors);
+          o.complete();
+        })
+      });
+    });
+  }
+
+  getSensor(id:string):Observable<Sensor>{
+    this.messageService.add('センサーID ${id} 取得');
+    return new Observable<Sensor>((o)=>{
+      this.getSensors().subscribe(x=>{
+        o.next(this.sensors.find(x => x.id === id));
+        o.complete();
+      });
+    });
+  }
+}

@@ -1,0 +1,11 @@
+﻿@page
+@model ForgotPasswordConfirmation
+@{
+    ViewData["Title"] = "パスワード再発行　送信完了";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+   パスワード再発行のEメールを受信して再発行してください
+</p>
+

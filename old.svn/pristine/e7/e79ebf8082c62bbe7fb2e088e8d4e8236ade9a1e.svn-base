@@ -1,0 +1,10 @@
+﻿@page
+@model ResetPasswordConfirmationModel
+@{
+    ViewData["Title"] = "パスワード上書き更新確認";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    パスワードを上書き更新します。 <a asp-page="./Login">更新してログイン</a>.
+</p>
